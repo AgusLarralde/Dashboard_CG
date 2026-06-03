@@ -1,107 +1,157 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grupo Farmaplus — Resultados Abril 2026</title>
-    
-    <!-- AQUÍ CONECTAMOS EL ARCHIVO DE ESTILOS -->
-    <link rel="stylesheet" href="style.css">
-  
-    <!-- AQUÍ CONECTAMOS LA LIBRERÍA OFICIAL DE GRÁFICOS Y TU SCRIPT -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-    <script src="script.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupo Farmaplus — Resultados Abril 2026</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" defer></script>
+<script src="script.js" defer></script>
 </head>
 <body>
 <div class="page">
 
-    <div class="hdr">
-      <div>
-        <div class="hdr-title">Farmaplus Grupo — Resultados Mayo 2026</div>
-        <div class="hdr-sub">ARS millones · comparativa vs Presupuesto 2026</div>
-      </div>
-      <div class="seg-block">
-        <div class="seg-row">
-          <span class="seg-lbl">Región / total:</span>
-          <button class="seg-btn active" data-v="Consolidado">Consolidado</button>
-          <button class="seg-btn" data-v="Bs As">Bs. As.</button>
-          <button class="seg-btn" data-v="Lider">Córdoba</button>
-          <button class="seg-btn" data-v="MDQ">MDQ</button>
-        </div>
-        <div class="seg-row">
-          <span class="seg-lbl">Apertura Bs. As.:</span>
-          <button class="seg-btn sub" data-v="Farmacias BA">Farma AMBA</button>
-          <button class="seg-btn sub" data-v="Ecommerce">Ecommerce Bs. As.</button>
-          <button class="seg-btn sub" data-v="Mayorista">Mayorista Bs. As.</button>
-        </div>
-      </div>
+<div class="hdr">
+  <div>
+    <div class="hdr-title">Grupo Farmaplus — Resultados Abril 2026</div>
+    <div class="hdr-sub">ARS millones · comparativa vs Presupuesto 2026</div>
+  </div>
+  <div class="seg-block">
+    <div class="seg-row">
+      <span class="seg-lbl">Región / total:</span>
+      <button class="seg-btn active" data-v="Consolidado">Consolidado</button>
+      <button class="seg-btn" data-v="Bs As">Bs. As.</button>
+      <button class="seg-btn" data-v="Lider">Córdoba</button>
+      <button class="seg-btn" data-v="MDQ">MDQ</button>
     </div>
-
-    <div class="row-label">Acumulado Ene – May 2026</div>
-    <div class="kpi-grid" id="kpi-ytd"></div>
-
-    <div class="row-label">Mes Mayo 2026</div>
-    <div class="kpi-grid" id="kpi-abr"></div>
-
-    <div class="sec-title">Evolución mensual 2026 — Real vs Presupuesto</div>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <div class="chart-hdr">
-          <div class="chart-title">Venta P&amp;L</div>
-          <div class="legend-row">
-            <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
-            <span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span>
-          </div>
-        </div>
-        <div style="position:relative;height:200px"><canvas id="cVenta"></canvas></div>
-      </div>
-      
-      <div class="chart-card">
-        <div class="chart-hdr">
-          <div class="chart-title">Margen Bruto Final</div>
-          <div class="legend-row">
-            <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
-            <span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span>
-          </div>
-        </div>
-        <div style="position:relative;height:200px"><canvas id="cMbf"></canvas></div>
-      </div>
-      
-      <div class="chart-card">
-        <div class="chart-hdr">
-          <div class="chart-title">Gastos totales</div>
-          <div class="legend-row">
-            <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
-            <span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span>
-          </div>
-        </div>
-        <div style="position:relative;height:162px"><canvas id="cGastos"></canvas></div>
-        <div class="pct-block">
-          <div class="pct-title">% s/venta P&amp;L</div>
-          <div id="pt-gastos"></div>
-        </div>
-      </div>
-      
-      <div class="chart-card">
-        <div class="chart-hdr">
-          <div class="chart-title">EBITDA</div>
-          <div class="legend-row">
-            <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
-            <span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span>
-          </div>
-        </div>
-        <div style="position:relative;height:162px"><canvas id="cEbitda"></canvas></div>
-        <div class="pct-block">
-          <div class="pct-title">% s/venta P&amp;L</div>
-          <div id="pt-ebitda"></div>
-        </div>
-      </div>
+    <div class="seg-row">
+      <span class="seg-lbl">Apertura Bs. As.:</span>
+      <button class="seg-btn sub" data-v="Farmacias BA">Farma AMBA</button>
+      <button class="seg-btn sub" data-v="Ecommerce">Ecommerce Bs. As.</button>
+      <button class="seg-btn sub" data-v="Mayorista">Mayorista Bs. As.</button>
     </div>
-
-    <div class="sec-title">Resumen P&amp;L — Mayo 2026</div>
-    <div class="table-card" id="pl-table"></div>
-
+  </div>
 </div>
 
+<div class="row-label">Acumulado Ene – Abr 2026</div>
+<div class="kpi-grid" id="kpi-ytd"></div>
+
+<div class="group-header" onclick="toggleGroup('grp-ytd')">
+  <span class="group-title">Contribución por unidad — Acumulado Ene–Abr</span>
+  <div class="group-header-line"></div>
+  <button class="group-toggle" id="btn-grp-ytd">▲ Ocultar</button>
+</div>
+<div class="group-content" id="grp-ytd">
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><div class="chart-title">Venta P&amp;L por unidad</div><div class="chart-sub">Ene–Abr 2026 · ARS M</div></div>
+        <div class="legend-row">
+          <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+          <span class="leg"><span class="leg-sq" style="background:#B4B2A9"></span>Ppto</span>
+        </div>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="cUnitVentaYtd"></canvas></div>
+      <div class="unit-share-row" id="share-venta-ytd"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><div class="chart-title">EBITDA por unidad</div><div class="chart-sub">Ene–Abr 2026 · ARS M</div></div>
+        <div class="legend-row">
+          <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+          <span class="leg"><span class="leg-sq" style="background:#B4B2A9"></span>Ppto</span>
+        </div>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="cUnitEbitdaYtd"></canvas></div>
+      <div class="unit-share-row" id="share-ebitda-ytd"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row-label">Mes Abril 2026</div>
+<div class="kpi-grid" id="kpi-abr"></div>
+
+<div class="group-header" onclick="toggleGroup('grp-abr')">
+  <span class="group-title">Contribución por unidad — Abril 2026</span>
+  <div class="group-header-line"></div>
+  <button class="group-toggle" id="btn-grp-abr">▲ Ocultar</button>
+</div>
+<div class="group-content" id="grp-abr">
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><div class="chart-title">Venta P&amp;L por unidad</div><div class="chart-sub">Abril 2026 · ARS M</div></div>
+        <div class="legend-row">
+          <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+          <span class="leg"><span class="leg-sq" style="background:#B4B2A9"></span>Ppto</span>
+        </div>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="cUnitVentaAbr"></canvas></div>
+      <div class="unit-share-row" id="share-venta-abr"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><div class="chart-title">EBITDA por unidad</div><div class="chart-sub">Abril 2026 · ARS M</div></div>
+        <div class="legend-row">
+          <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+          <span class="leg"><span class="leg-sq" style="background:#B4B2A9"></span>Ppto</span>
+        </div>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="cUnitEbitdaAbr"></canvas></div>
+      <div class="unit-share-row" id="share-ebitda-abr"></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">Evolución mensual 2026 — Real vs Presupuesto (Mayo = ppto)</div>
+<div class="charts-grid">
+  <div class="chart-card">
+    <div class="chart-hdr">
+      <div class="chart-title">Venta P&amp;L</div>
+      <div class="legend-row">
+        <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+        <span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span>
+      </div>
+    </div>
+    <div style="position:relative;height:200px"><canvas id="cVenta"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-hdr">
+      <div class="chart-title">Margen Bruto Final</div>
+      <div class="legend-row">
+        <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+        <span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span>
+      </div>
+    </div>
+    <div style="position:relative;height:200px"><canvas id="cMbf"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-hdr">
+      <div class="chart-title">Gastos totales</div>
+      <div class="legend-row">
+        <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+        <span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span>
+      </div>
+    </div>
+    <div style="position:relative;height:162px"><canvas id="cGastos"></canvas></div>
+    <div class="pct-block"><div class="pct-title">% s/venta P&amp;L</div><div id="pt-gastos"></div></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-hdr">
+      <div class="chart-title">EBITDA</div>
+      <div class="legend-row">
+        <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+        <span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span>
+      </div>
+    </div>
+    <div style="position:relative;height:162px"><canvas id="cEbitda"></canvas></div>
+    <div class="pct-block"><div class="pct-title">% s/venta P&amp;L</div><div id="pt-ebitda"></div></div>
+  </div>
+</div>
+
+<div class="sec-title">Resumen P&amp;L — Abril 2026</div>
+<div class="table-card" id="pl-table"></div>
+
+</div>
 </body>
 </html>
