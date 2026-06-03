@@ -8,10 +8,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .seg-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .seg-lbl{font-size:10px;color:#5f5e5a;white-space:nowrap;width:90px}
 .seg-btn{font-size:11px;padding:3px 10px;border-radius:20px;border:0.5px solid #b4b2a9;background:#fff;color:#5f5e5a;cursor:pointer;transition:all .15s}
-.seg-btn:hover{background:#f1efe8;border-color:#888780}
+.seg-btn:hover{background:#f1efe8}
 .seg-btn.active{background:#185FA5;color:#fff;border-color:#185FA5;font-weight:500}
 .seg-btn.sub{font-size:10px;padding:2px 9px;border-style:dashed}
-.seg-btn.sub:hover{background:#eeedfe;border-color:#7f77dd;border-style:dashed}
 .seg-btn.sub.active{background:#533AB7;border-color:#533AB7;border-style:solid;color:#fff}
 .row-label{font-size:10px;font-weight:500;color:#5f5e5a;text-transform:uppercase;letter-spacing:.06em;margin:1rem 0 .5rem;display:flex;align-items:center;gap:8px}
 .row-label::after{content:'';flex:1;height:0.5px;background:#e0dfd8}
@@ -23,18 +22,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .kpi-sub{font-size:10px;margin-top:4px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .kpi-ppto{font-size:10px;color:#5f5e5a;margin-top:1px}
 .badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;font-weight:500}
+.group-header{display:flex;align-items:center;gap:8px;margin:1rem 0 .7rem;cursor:pointer;user-select:none}
+.group-header-line{flex:1;height:0.5px;background:#e0dfd8}
+.group-title{font-size:11px;font-weight:500;color:#5f5e5a;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.group-toggle{font-size:10px;padding:2px 9px;border-radius:20px;border:0.5px solid #b4b2a9;background:#fff;color:#5f5e5a;cursor:pointer;white-space:nowrap}
+.group-content{overflow:hidden;transition:max-height .3s ease,opacity .3s ease;max-height:700px;opacity:1}
+.group-content.collapsed{max-height:0;opacity:0;pointer-events:none}
 .sec-title{font-size:11px;font-weight:500;color:#5f5e5a;text-transform:uppercase;letter-spacing:.06em;margin:1.2rem 0 .7rem;display:flex;align-items:center;gap:8px}
 .sec-title::after{content:'';flex:1;height:0.5px;background:#e0dfd8}
 .charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .chart-card{background:#fff;border-radius:12px;border:0.5px solid #e0dfd8;padding:12px 14px 10px}
 .chart-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .chart-title{font-size:12px;font-weight:500;color:#1a1a18}
-.legend-row{display:flex;gap:10px}
+.chart-sub{font-size:10px;color:#5f5e5a;margin-top:1px}
+.legend-row{display:flex;gap:10px;flex-wrap:wrap}
 .leg{display:flex;align-items:center;gap:4px;font-size:10px;color:#5f5e5a}
 .leg-sq{width:8px;height:8px;border-radius:2px;flex-shrink:0}
 .leg-dash{width:14px;height:0;border-top:2px dashed;flex-shrink:0}
 .pct-block{margin-top:4px;border-top:0.5px solid #e0dfd8;padding-top:4px}
 .pct-title{font-size:9px;color:#5f5e5a;margin-bottom:2px}
+.unit-share-row{display:flex;margin-top:6px;border-top:0.5px solid #e0dfd8;padding-top:5px}
+.unit-share-lbl{font-size:9px;color:#5f5e5a;white-space:nowrap;padding-right:6px;display:flex;align-items:center;min-width:50px}
+.unit-share-cells{display:flex;flex:1}
+.unit-share-cell{flex:1;text-align:center;font-size:10px;font-weight:500}
 .table-card{background:#fff;border-radius:12px;border:0.5px solid #e0dfd8;padding:12px 14px;margin-top:12px;overflow-x:auto}
 table.pl{width:100%;border-collapse:collapse;font-size:11px}
 table.pl th{font-weight:500;font-size:10px;color:#5f5e5a;text-align:right;padding:4px 8px;border-bottom:0.5px solid #e0dfd8}
