@@ -8,7 +8,7 @@ let UNITS = {};
 let charts = {};
 
 // ACA VA TU LINK DE GOOGLE APPS SCRIPT:
-const API_URL = "https://script.google.com/macros/s/TU_CODIGO_AQUI/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbygj711qIbomUP_OMErR2h3KxOJmbmjo7R04nqR26vB6PeBjzHG8VG8KteRrDeb0V8S/exec";
 
 // Funciones de formato y badges
 function fmt(v){return Math.round(v).toLocaleString('es-AR')}
