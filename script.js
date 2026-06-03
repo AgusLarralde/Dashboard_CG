@@ -31,11 +31,11 @@ function badgePct(r,p,higher){
   return `<span class="badge" style="color:${col};background:${bg}">${g>0?'+':''}${fmtp(g)}</span>`;
 }
 
-function toggleGroup(id){
-  const el=document.getElementById(id);
-  const btn=document.getElementById('btn-'+id);
-  const collapsed=el.classList.toggle('collapsed');
-  btn.textContent=collapsed?'▼ Mostrar':'▲ Ocultar';
+window.toggleGroup = function(id) {
+  const el = document.getElementById(id);
+  const btn = document.getElementById('btn-' + id);
+  const collapsed = el.classList.toggle('collapsed');
+  btn.textContent = collapsed ? '▼ Mostrar' : '▲ Ocultar';
 }
 
 function buildKPIs(ytdEl,abrEl,v){
@@ -75,6 +75,12 @@ function buildShareRow(elId,realVals){
 }
 
 function buildBarChart(id,labels,realD,pptoD,colors){
+  // Validación de seguridad para evitar que el gráfico rompa el código si faltan datos
+  if (!realD || !pptoD || realD.length === 0) {
+    console.warn("Faltan datos para el gráfico:", id);
+    return; 
+  }
+
   if(charts[id])charts[id].destroy();
   charts[id]=new Chart(document.getElementById(id),{type:'bar',
     data:{labels,datasets:[
