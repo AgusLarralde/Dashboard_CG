@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grupo Farmaplus — Resultados Abril 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;padding:24px;min-height:100vh}
+.page{max-width:1100px;margin:0 auto;background:#fff;border-radius:12px;padding:28px 32px 40px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.hdr{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:1.1rem;border-bottom:0.5px solid #e0dfd8;margin-bottom:1.1rem;flex-wrap:wrap;gap:8px;position:sticky;top:0;background:#fff;z-index:100;padding-top:20px;margin-top:-20px}
+.hdr-title{font-size:16px;font-weight:500;color:#1a1a18}
+.hdr-sub{font-size:11px;color:#5f5e5a;margin-top:3px}
+.seg-block{display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+.seg-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.seg-lbl{font-size:10px;color:#5f5e5a;white-space:nowrap;width:90px}
+.seg-btn{font-size:11px;padding:3px 10px;border-radius:20px;border:0.5px solid #b4b2a9;background:#fff;color:#5f5e5a;cursor:pointer;transition:all .15s}
+.seg-btn:hover{background:#f1efe8}
+.seg-btn.active{background:#185FA5;color:#fff;border-color:#185FA5;font-weight:500}
+.seg-btn.sub{font-size:10px;padding:2px 9px;border-style:dashed}
+.seg-btn.sub.active{background:#533AB7;border-color:#533AB7;border-style:solid;color:#fff}
+.row-label{font-size:10px;font-weight:500;color:#5f5e5a;text-transform:uppercase;letter-spacing:.06em;margin:1rem 0 .5rem;display:flex;align-items:center;gap:8px}
+.row-label::after{content:'';flex:1;height:0.5px;background:#e0dfd8}
+.kpi-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-bottom:4px}
+.kpi{background:#f5f5f3;border-radius:8px;padding:12px 12px 10px}
+.kpi-lbl{font-size:10px;color:#5f5e5a;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi-lbl.sm{font-size:8.5px;letter-spacing:.02em}
+.kpi-val{font-size:18px;font-weight:500;color:#1a1a18;line-height:1.1}
+.kpi-sub{font-size:10px;margin-top:4px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.kpi-ppto{font-size:10px;color:#5f5e5a;margin-top:1px}
+.badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:10px;font-weight:500}
+.group-header{display:flex;align-items:center;gap:8px;margin:1rem 0 .7rem;cursor:pointer;user-select:none}
+.group-header-line{flex:1;height:0.5px;background:#e0dfd8}
+.group-title{font-size:11px;font-weight:500;color:#5f5e5a;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.group-toggle{font-size:10px;padding:2px 9px;border-radius:20px;border:0.5px solid #b4b2a9;background:#fff;color:#5f5e5a;cursor:pointer;white-space:nowrap}
+.group-content{overflow:hidden;transition:max-height .3s ease,opacity .3s ease;max-height:700px;opacity:1}
+.group-content.collapsed{max-height:0;opacity:0;pointer-events:none}
+.sec-title{font-size:11px;font-weight:500;color:#5f5e5a;text-transform:uppercase;letter-spacing:.06em;margin:1.2rem 0 .7rem;display:flex;align-items:center;gap:8px}
+.sec-title::after{content:'';flex:1;height:0.5px;background:#e0dfd8}
+.charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.chart-card{background:#fff;border-radius:12px;border:0.5px solid #e0dfd8;padding:12px 14px 10px}
+.chart-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.chart-title{font-size:12px;font-weight:500;color:#1a1a18}
+.chart-sub{font-size:10px;color:#5f5e5a;margin-top:1px}
+.legend-row{display:flex;gap:10px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:4px;font-size:10px;color:#5f5e5a}
+.leg-sq{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.leg-dash{width:14px;height:0;border-top:2px dashed;flex-shrink:0}
+.pct-block{margin-top:4px;border-top:0.5px solid #e0dfd8;padding-top:4px}
+.pct-title{font-size:9px;color:#5f5e5a;margin-bottom:2px}
+.unit-share-row{display:flex;margin-top:6px;border-top:0.5px solid #e0dfd8;padding-top:5px}
+.unit-share-lbl{font-size:9px;color:#5f5e5a;white-space:nowrap;padding-right:6px;display:flex;align-items:center;min-width:50px}
+.unit-share-cells{display:flex;flex:1}
+.unit-share-cell{flex:1;text-align:center;font-size:10px;font-weight:500}
+.table-card{background:#fff;border-radius:12px;border:0.5px solid #e0dfd8;padding:12px 14px;margin-top:12px;overflow-x:auto}
+table.pl{width:100%;border-collapse:collapse;font-size:11px}
+table.pl th{font-weight:500;font-size:10px;color:#5f5e5a;text-align:right;padding:4px 8px;border-bottom:0.5px solid #e0dfd8}
+table.pl th:first-child{text-align:left}
+table.pl td{padding:5px 8px;text-align:right;border-bottom:0.5px solid #e0dfd8;color:#1a1a18}
+table.pl td:first-child{text-align:left;font-weight:500}
+table.pl tr:last-child td{border-bottom:none;font-weight:500;background:#f5f5f3}
+
+/* === NUEVO: tabla Resumen P&L estática (estilo EERR) === */
+.pl2-wrap{margin-top:14px}
+.pl2-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.pl2-bar .sec-title{margin:0;flex:1;min-width:140px}
+.pl2-ctrls{display:flex;align-items:center;gap:6px}
+.pl2-ctrls select,.pl2-ctrls button{font-family:inherit;font-size:11px;border:0.5px solid #b4b2a9;background:#fff;color:#1a1a18;border-radius:20px;height:28px;padding:0 12px;cursor:pointer;transition:all .15s}
+.pl2-ctrls select:hover,.pl2-ctrls button:hover{background:#f1efe8}
+.pl2-ctrls button.act{background:#185FA5;color:#fff;border-color:#185FA5;font-weight:500}
+.pl2-ctrls select:disabled{opacity:.45;cursor:not-allowed}
+.pl2-ctrls .pl2-tgl{padding:0 10px;font-size:10px}
+.pl2-scroll{overflow-x:auto;border:0.5px solid #e0dfd8;border-radius:12px;background:#fff}
+table.pl2{width:100%;border-collapse:collapse;font-size:10px;min-width:600px}
+table.pl2 th,table.pl2 td{padding:4px 6px;white-space:nowrap}
+table.pl2 tbody td{height:30px;vertical-align:middle}
+table.pl2 thead th{font-weight:600;text-align:center;font-size:10px;vertical-align:middle}
+table.pl2 th.h-act{background:#16335f;color:#fff}
+table.pl2 th.h-dev{background:#1d5e2e;color:#fff}
+table.pl2 th.h-rub{background:#16335f;color:#fff;text-align:left;vertical-align:middle}
+table.pl2 th.sub{font-size:9px;font-weight:500}
+table.pl2 td.rub{text-align:left;font-weight:500;color:#1a1a18}
+table.pl2 td.num{text-align:center;font-variant-numeric:tabular-nums}
+table.pl2 td.dev{text-align:center;font-variant-numeric:tabular-nums;line-height:1.15}
+table.pl2 td.dev .pct{display:block;font-size:9px;color:#888780;font-weight:400}
+table.pl2 tbody tr:nth-child(even){background:#f4f7fb}
+table.pl2 tbody tr.subt{background:#e7eef7;font-weight:600}
+table.pl2 tbody tr.subt td.rub{font-weight:600}
+table.pl2 td.pos{color:#27500A}
+table.pl2 td.neg{color:#A32D2D}
+table.pl2 td.zero{color:#b4b2a9}
+
+/* === reformato tabla existente === */
+table.pl3{width:100%;border-collapse:collapse;font-size:11px;min-width:540px}
+table.pl3 th,table.pl3 td{padding:5px 9px;border-bottom:0.5px solid #e0dfd8}
+table.pl3 thead th{font-weight:500;font-size:10px;color:#5f5e5a;text-align:right}
+table.pl3 th.h-rub{text-align:left}
+table.pl3 th.grp{text-align:center;border-bottom:0.5px solid #b4b2a9}
+table.pl3 th.sub{font-size:9px;font-weight:400}
+table.pl3 td.rub{text-align:left;font-weight:500}
+table.pl3 td.num,table.pl3 td.dev{text-align:right;font-variant-numeric:tabular-nums}
+table.pl3 td.pos{color:#27500A;font-weight:500}
+table.pl3 td.neg{color:#A32D2D;font-weight:500}
+table.pl3 td.zero{color:#b4b2a9}
+table.pl3 tbody tr:nth-child(even){background:#faf9f6}
+.pl2-collapsed{display:none}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hdr">
+  <div>
+    <div class="hdr-title">Grupo Farmaplus — Resultados Abril 2026</div>
+    <div class="hdr-sub">ARS millones · comparativa vs Presupuesto 2026</div>
+  </div>
+  <div class="seg-block">
+    <div class="seg-row">
+      <span class="seg-lbl">Región / total:</span>
+      <button class="seg-btn active" data-v="Consolidado">Consolidado</button>
+      <button class="seg-btn" data-v="Bs As">Bs. As.</button>
+      <button class="seg-btn" data-v="Lider">Córdoba</button>
+      <button class="seg-btn" data-v="MDQ">MDQ</button>
+    </div>
+    <div class="seg-row">
+      <span class="seg-lbl">Apertura Bs. As.:</span>
+      <button class="seg-btn sub" data-v="Farmacias BA">Farma AMBA</button>
+      <button class="seg-btn sub" data-v="Ecommerce">Ecommerce Bs. As.</button>
+      <button class="seg-btn sub" data-v="Mayorista">Mayorista Bs. As.</button>
+    </div>
+  </div>
+</div>
+
+<div class="row-label">Acumulado Ene – Abr 2026</div>
+<div class="kpi-grid" id="kpi-ytd"></div>
+
+<div class="group-header" onclick="toggleGroup('grp-ytd')">
+  <span class="group-title">Contribución por unidad — Acumulado Ene–Abr</span>
+  <div class="group-header-line"></div>
+  <button class="group-toggle" id="btn-grp-ytd">▲ Ocultar</button>
+</div>
+<div class="group-content" id="grp-ytd">
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><div class="chart-title">Venta P&amp;L por unidad</div><div class="chart-sub">Ene–Abr 2026 · ARS M</div></div>
+        <div class="legend-row">
+          <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+          <span class="leg"><span class="leg-sq" style="background:#B4B2A9"></span>Ppto</span>
+        </div>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="cUnitVentaYtd"></canvas></div>
+      <div class="unit-share-row" id="share-venta-ytd"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><div class="chart-title">EBITDA por unidad</div><div class="chart-sub">Ene–Abr 2026 · ARS M</div></div>
+        <div class="legend-row">
+          <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+          <span class="leg"><span class="leg-sq" style="background:#B4B2A9"></span>Ppto</span>
+        </div>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="cUnitEbitdaYtd"></canvas></div>
+      <div class="unit-share-row" id="share-ebitda-ytd"></div>
+    </div>
+  </div>
+</div>
+
+<div class="row-label">Mes Abril 2026</div>
+<div class="kpi-grid" id="kpi-abr"></div>
+
+<div class="group-header" onclick="toggleGroup('grp-abr')">
+  <span class="group-title">Contribución por unidad — Abril 2026</span>
+  <div class="group-header-line"></div>
+  <button class="group-toggle" id="btn-grp-abr">▲ Ocultar</button>
+</div>
+<div class="group-content" id="grp-abr">
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><div class="chart-title">Venta P&amp;L por unidad</div><div class="chart-sub">Abril 2026 · ARS M</div></div>
+        <div class="legend-row">
+          <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+          <span class="leg"><span class="leg-sq" style="background:#B4B2A9"></span>Ppto</span>
+        </div>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="cUnitVentaAbr"></canvas></div>
+      <div class="unit-share-row" id="share-venta-abr"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-hdr">
+        <div><div class="chart-title">EBITDA por unidad</div><div class="chart-sub">Abril 2026 · ARS M</div></div>
+        <div class="legend-row">
+          <span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span>
+          <span class="leg"><span class="leg-sq" style="background:#B4B2A9"></span>Ppto</span>
+        </div>
+      </div>
+      <div style="position:relative;height:200px"><canvas id="cUnitEbitdaAbr"></canvas></div>
+      <div class="unit-share-row" id="share-ebitda-abr"></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec-title">Evolución mensual 2026 — Real vs Presupuesto (Mayo = ppto)</div>
+<div class="charts-grid">
+  <div class="chart-card">
+    <div class="chart-hdr"><div class="chart-title">Venta P&amp;L</div>
+      <div class="legend-row"><span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span><span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span></div>
+    </div>
+    <div style="position:relative;height:200px"><canvas id="cVenta"></canvas></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-hdr"><div class="chart-title">Margen Bruto Final</div>
+      <div class="legend-row"><span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span><span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span></div>
+    </div>
+    <div style="position:relative;height:162px"><canvas id="cMbf"></canvas></div>
+    <div class="pct-block"><div class="pct-title">% s/venta P&amp;L</div><div id="pt-mbf"></div></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-hdr"><div class="chart-title">Gastos totales</div>
+      <div class="legend-row"><span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span><span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span></div>
+    </div>
+    <div style="position:relative;height:162px"><canvas id="cGastos"></canvas></div>
+    <div class="pct-block"><div class="pct-title">% s/venta P&amp;L</div><div id="pt-gastos"></div></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-hdr"><div class="chart-title">EBITDA</div>
+      <div class="legend-row"><span class="leg"><span class="leg-sq" style="background:#185FA5"></span>Real</span><span class="leg"><span class="leg-dash" style="border-color:#888780"></span>Ppto</span></div>
+    </div>
+    <div style="position:relative;height:162px"><canvas id="cEbitda"></canvas></div>
+    <div class="pct-block"><div class="pct-title">% s/venta P&amp;L</div><div id="pt-ebitda"></div></div>
+  </div>
+</div>
+
+<!-- ===== TABLA NUEVA · estática (no usa segmentadores) ===== -->
+<div class="pl2-wrap">
+  <div class="pl2-bar">
+    <div class="sec-title">Resumen P&amp;L</div>
+    <div class="pl2-ctrls">
+      <select id="pl2-mes" onchange="renderPL2()">
+        <option value="1">Enero 2026</option>
+        <option value="2">Febrero 2026</option>
+        <option value="3">Marzo 2026</option>
+        <option value="4" selected>Abril 2026</option>
+      </select>
+      <button id="pl2-ytd-btn" onclick="togglePL2YTD()">YTD acumulado</button>
+      <button class="pl2-tgl" id="pl2-tgl-btn" onclick="togglePL2()" title="Mostrar/ocultar">▲ Ocultar</button>
+    </div>
+  </div>
+  <div id="pl2-content">
+    <div class="pl2-scroll">
+      <table class="pl2">
+        <thead>
+          <tr>
+            <th class="h-rub" rowspan="2">Resumen EERR</th>
+            <th class="h-act" colspan="4">Actual</th>
+            <th class="h-dev" colspan="4">Desvíos Actual vs Presupuesto</th>
+          </tr>
+          <tr>
+            <th class="h-act sub">Farmaplus Bs.As.</th><th class="h-act sub">Lider</th><th class="h-act sub">MDQ</th><th class="h-act sub">Total</th>
+            <th class="h-dev sub">Farmaplus Bs.As.</th><th class="h-dev sub">Lider</th><th class="h-dev sub">MDQ</th><th class="h-dev sub">Total</th>
+          </tr>
+        </thead>
+        <tbody id="pl2-body"></tbody>
+      </table>
+    </div>
+    <div style="font-size:10px;color:#888780;margin-top:5px" id="pl2-foot"></div>
+  </div>
+</div>
+
+<!-- ===== TABLA EXISTENTE · ligada a segmentadores (reformateada) ===== -->
+<div class="sec-title" style="margin-top:22px">Resumen P&amp;L — Abril 2026</div>
+<div class="table-card" id="pl-table"></div>
+
+</div>
+
+<script>
+/* ============================================================
+   FARMAPLUS — Tablero unificado (CSS + JS + datos demo embebidos)
+   Estructura idéntica a la API de Google Sheets (D, UNITS).
+   PL2 = datos de la tabla nueva (16 rubros x unidad x escenario).
+   Para conectar a Sheets: borrar EMBED_* y descomentar cargarDatos().
+   ============================================================ */
+
+const MONTHS=['Ene','Feb','Mar','Abr','May'];
+const COL_POS='#27500A', COL_NEG='#A32D2D';
+const BG_POS='#C0DD97', BG_NEG='#F7C1C1';
+
+let D = {};
+let UNITS = {};
+let PL2 = {};            // datos tabla nueva
+let ULTIMO_REAL = 4;     // mes hasta el cual hay real
+let charts = {};
+
+const API_URL = "https://script.google.com/macros/s/AKfycbygj711qIbomUP_OMErR2h3KxOJmbmjo7R04nqR26vB6PeBjzHG8VG8KteRrDeb0V8S/exec";
+
+/* ---------- formato y badges (de tu script.js) ---------- */
+function fmt(v){return Math.round(v).toLocaleString('es-AR')}
+function fmtp(v){return v.toFixed(1)+'%'}
+function badgeVenta(r,p,higher){
+  const g=r-p,good=higher?g>0:g<0;
+  const col=good?COL_POS:COL_NEG,bg=good?BG_POS:BG_NEG;
+  const pct=p!==0?((g/Math.abs(p))*100):0;
+  return `<span class="badge" style="color:${col};background:${bg}">${g>0?'+':''}${fmt(g)}&nbsp;&nbsp;${g>0?'+':''}${pct.toFixed(1)}%</span>`;
+}
+function badge(r,p,higher){
+  const g=r-p,good=higher?g>0:g<0;
+  const col=good?COL_POS:COL_NEG,bg=good?BG_POS:BG_NEG;
+  return `<span class="badge" style="color:${col};background:${bg}">${g>0?'+':''}${fmt(g)}</span>`;
+}
+function badgePct(r,p,higher){
+  const g=r-p,good=higher?g>0:g<0;
+  const col=good?COL_POS:COL_NEG,bg=good?BG_POS:BG_NEG;
+  return `<span class="badge" style="color:${col};background:${bg}">${g>0?'+':''}${fmtp(g)}</span>`;
+}
+
+window.toggleGroup = function(id){
+  const el=document.getElementById(id);
+  const btn=document.getElementById('btn-'+id);
+  const collapsed=el.classList.toggle('collapsed');
+  btn.textContent=collapsed?'▼ Mostrar':'▲ Ocultar';
+}
+
+function buildKPIs(ytdEl,abrEl,v){
+  const d=D[v];
+  const defs=[
+    {lbl:'Venta P&L',sm:false,ytdV:'$'+fmt(d.ytd.venta_r)+'M',ytdB:badgeVenta(d.ytd.venta_r,d.ytd.venta_p,true),ytdP:'Ppto $'+fmt(d.ytd.venta_p)+'M',abrV:'$'+fmt(d.abr.venta_r)+'M',abrB:badgeVenta(d.abr.venta_r,d.abr.venta_p,true),abrP:'Ppto $'+fmt(d.abr.venta_p)+'M'},
+    {lbl:'Margen Bruto F',sm:true,ytdV:fmtp(d.ytd.mbf_pct_r),ytdB:badgePct(d.ytd.mbf_pct_r,d.ytd.mbf_pct_p,true),ytdP:'Ppto '+fmtp(d.ytd.mbf_pct_p),abrV:fmtp(d.abr.mbf_pct_r),abrB:badgePct(d.abr.mbf_pct_r,d.abr.mbf_pct_p,true),abrP:'Ppto '+fmtp(d.abr.mbf_pct_p)},
+    {lbl:'Gastos % vta',sm:false,ytdV:fmtp(d.ytd.gastos_pct_r),ytdB:badgePct(d.ytd.gastos_pct_r,d.ytd.gastos_pct_p,true),ytdP:'Ppto '+fmtp(d.ytd.gastos_pct_p),abrV:fmtp(d.abr.gastos_pct_r),abrB:badgePct(d.abr.gastos_pct_r,d.abr.gastos_pct_p,true),abrP:'Ppto '+fmtp(d.abr.gastos_pct_p)},
+    {lbl:'EBITDA $',sm:false,ytdV:'$'+fmt(d.ytd.ebitda_r)+'M',ytdB:badge(d.ytd.ebitda_r,d.ytd.ebitda_p,true),ytdP:'Ppto $'+fmt(d.ytd.ebitda_p)+'M',abrV:'$'+fmt(d.abr.ebitda_r)+'M',abrB:badge(d.abr.ebitda_r,d.abr.ebitda_p,true),abrP:'Ppto $'+fmt(d.abr.ebitda_p)+'M'},
+    {lbl:'EBITDA %',sm:false,ytdV:fmtp(d.ytd.ebitda_pct_r),ytdB:badgePct(d.ytd.ebitda_pct_r,d.ytd.ebitda_pct_p,true),ytdP:'Ppto '+fmtp(d.ytd.ebitda_pct_p),abrV:fmtp(d.abr.ebitda_pct_r),abrB:badgePct(d.abr.ebitda_pct_r,d.abr.ebitda_pct_p,true),abrP:'Ppto '+fmtp(d.abr.ebitda_pct_p)},
+    {lbl:'Net Profit %',sm:false,ytdV:fmtp(d.ytd.np_pct_r),ytdB:badgePct(d.ytd.np_pct_r,d.ytd.np_pct_p,true),ytdP:'Ppto '+fmtp(d.ytd.np_pct_p),abrV:fmtp(d.abr.np_pct_r),abrB:badgePct(d.abr.np_pct_r,d.abr.np_pct_p,true),abrP:'Ppto '+fmtp(d.abr.np_pct_p)},
+  ];
+  document.getElementById(ytdEl).innerHTML=defs.map(k=>`<div class="kpi"><div class="kpi-lbl${k.sm?' sm':''}">${k.lbl}</div><div class="kpi-val">${k.ytdV}</div><div class="kpi-sub">${k.ytdB} vs Ppto</div><div class="kpi-ppto">${k.ytdP}</div></div>`).join('');
+  document.getElementById(abrEl).innerHTML=defs.map(k=>`<div class="kpi"><div class="kpi-lbl${k.sm?' sm':''}">${k.lbl}</div><div class="kpi-val">${k.abrV}</div><div class="kpi-sub">${k.abrB} vs Ppto</div><div class="kpi-ppto">${k.abrP}</div></div>`).join('');
+}
+
+function buildShareRow(elId,realVals){
+  const total=realVals.reduce((a,b)=>a+(b>0?b:0),0);
+  const absTotal=realVals.reduce((a,b)=>a+Math.abs(b),0);
+  const cells=realVals.map((v,i)=>{
+    const share=total>0?(v/total*100):(absTotal>0?(Math.abs(v)/absTotal*100):0);
+    return `<div class="unit-share-cell" style="color:${UNITS.colors[i]}">${share.toFixed(1)}%</div>`;
+  }).join('');
+  document.getElementById(elId).innerHTML=`<span class="unit-share-lbl">% part.</span><div class="unit-share-cells">${cells}</div>`;
+}
+
+function buildBarChart(id,labels,realD,pptoD,colors){
+  if(!realD||!pptoD||realD.length===0){console.warn("Faltan datos:",id);return;}
+  if(charts[id])charts[id].destroy();
+  charts[id]=new Chart(document.getElementById(id),{type:'bar',
+    data:{labels,datasets:[
+      {label:'Real',data:realD,backgroundColor:colors.map(c=>c+'cc'),borderRadius:4,borderSkipped:false},
+      {label:'Ppto',data:pptoD,backgroundColor:colors.map(c=>c+'44'),borderRadius:4,borderSkipped:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' $'+Math.round(ctx.raw).toLocaleString('es-AR')+'M'}}},
+      scales:{x:{ticks:{font:{size:10},color:'#888780'},grid:{display:false}},
+        y:{ticks:{font:{size:9},color:'#888780',callback:v=>'$'+Math.round(v)+'M'},grid:{color:'rgba(136,135,128,0.12)'}}}}});
+}
+
+const baseOpts={responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' $'+Math.round(ctx.raw).toLocaleString('es-AR')+'M'}}},
+  scales:{x:{ticks:{font:{size:10},color:'#888780',autoSkip:false},grid:{display:false}},
+    y:{ticks:{font:{size:9},color:'#888780',callback:v=>'$'+Math.round(v/1000)+'k'},grid:{color:'rgba(136,135,128,0.12)'}}}};
+function mkDS(data,color,dashed,fill){
+  return{data,borderColor:color,backgroundColor:fill?color+'15':'transparent',
+    borderWidth:dashed?1.5:2,borderDash:dashed?[4,3]:[],
+    pointRadius:data.map(v=>v===null?0:3),pointHoverRadius:5,fill:!!fill,tension:0.3};
+}
+function buildLineChart(id,realD,pptoD,abs){
+  const r=abs?realD.map(v=>v===null?null:Math.abs(v)):realD;
+  const p=abs?pptoD.map(v=>v===null?null:Math.abs(v)):pptoD;
+  if(charts[id])charts[id].destroy();
+  // diferencias nominales por punto (Real - Ppto), solo donde hay real
+  const diffs=r.map((rv,i)=>(rv===null||p[i]===null||p[i]===undefined)?null:rv-p[i]);
+  // plugin: dibuja la diferencia nominal arriba de cada punto real
+  const diffLabels={
+    id:'diffLabels'+id,
+    afterDatasetsDraw(chart){
+      const ctx=chart.ctx;
+      const meta=chart.getDatasetMeta(0); // dataset Real
+      if(!meta||!meta.data)return;
+      ctx.save();
+      ctx.font='600 10px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+      ctx.textAlign='center';
+      meta.data.forEach((pt,i)=>{
+        const dv=diffs[i];
+        if(dv===null||dv===undefined)return;
+        // Para gastos (abs=true) las series están en valor absoluto: dv>0 = gastó más = malo (rojo).
+        // Para el resto: dv>0 = mejor (verde).
+        const good = abs ? (dv<0) : (dv>=0);
+        ctx.fillStyle=good?'#27500A':'#A32D2D';
+        // En gastos, gastar menos se muestra como ahorro (signo -) en verde; gastar más (+) en rojo.
+        const shown = abs ? -dv : dv;
+        const txt=(shown>0?'+':'')+Math.round(shown).toLocaleString('es-AR');
+        ctx.fillText(txt, pt.x, pt.y-9);
+      });
+      ctx.restore();
+    }
+  };
+  const opts=JSON.parse(JSON.stringify(baseOpts));
+  opts.layout={padding:{top:18,left:34}}; // top: texto sobre puntos; left: aire para Enero vs leyenda var/real/ppto
+  charts[id]=new Chart(document.getElementById(id),{type:'line',
+    data:{labels:MONTHS,datasets:[mkDS(r,'#185FA5',false,true),mkDS(p,'#888780',true,false)]},
+    options:opts, plugins:[diffLabels]});
+}
+
+function buildPctRow(containerId,chartId,realPct,pptoPct){
+  const chart=charts[chartId];
+  const container=document.getElementById(containerId);
+  function render(){
+    if(!chart||!chart.chartArea||chart.chartArea.right===0)return;
+    const ca=chart.chartArea;
+    const step=(ca.right-ca.left)/(MONTHS.length-1);
+    // fila absoluta con 3 niveles: variación / real / ppto, alineados a cada punto
+    let pts='<div style="position:relative;height:46px">';
+    MONTHS.forEach((m,i)=>{
+      const r=realPct[i],p=pptoPct[i];
+      const xPx=ca.left+i*step;
+      let varHtml='&nbsp;';
+      if(r!==null && r!==undefined && p!==null && p!==undefined){
+        const dv=r-p;                       // gastos en %: real menos negativo (>) = ahorro = verde
+        const col=dv===0?'#888780':(dv>0?'#27500A':'#A32D2D');
+        varHtml=`${dv>0?'+':''}${dv.toFixed(1)}pp`;
+        varHtml=`<span style="color:${col}">${varHtml}</span>`;
+      }
+      const realTxt=(r===null||r===undefined)?'':fmtp(Math.abs(r));
+      const pptoTxt=(p===null||p===undefined)?'':fmtp(Math.abs(p));
+      pts+=`<div style="position:absolute;left:${xPx}px;transform:translateX(-50%);text-align:center;line-height:1.3">
+        <span style="display:block;font-size:10px;font-weight:600">${varHtml}</span>
+        <span style="display:block;font-size:9px;color:#185FA5;font-weight:500">${realTxt}</span>
+        <span style="display:block;font-size:9px;color:#888780">${pptoTxt}</span>
+      </div>`;
+    });
+    pts+='</div>';
+    // leyenda flotante a la izquierda (absoluta, no desplaza la fila de puntos)
+    const legend=`<div style="position:relative">
+      <div style="position:absolute;left:0;top:0;font-size:9px;line-height:1.3;color:#5f5e5a;z-index:1;background:#fff;padding-right:3px">
+        <span style="display:block;font-weight:600">var.</span>
+        <span style="display:block;color:#185FA5;font-weight:500">real</span>
+        <span style="display:block">ppto</span>
+      </div>
+      ${pts}
+    </div>`;
+    container.innerHTML=legend;
+  }
+  if(chart&&chart.chartArea&&chart.chartArea.right>0)render();else setTimeout(render,400);
+}
+
+/* ===== TABLA EXISTENTE reformateada (ligada a segmentadores) =====
+   Columnas: Rubro | Real 2026 | Desv vs PPTO (nom,%) | Desv vs Año Anterior (nom,%)
+   Usa d.abr (real, ppto) + d.aa (año anterior r25) cuando exista. */
+function buildTable(v){
+  const d=D[v].abr;
+  const aa=D[v].aa||{};   // año anterior; si no viene, 0
+  const rows=[
+    {lbl:'Venta P&L',     r:d.venta_r,   p:d.venta_p,   y:aa.venta_r,   higher:true, tp:'$'},
+    {lbl:'Margen Bruto F %',r:d.mbf_pct_r,p:d.mbf_pct_p, y:aa.mbf_pct_r, higher:true, tp:'pct'},
+    {lbl:'Gastos $',      r:-d.gastos_r, p:-d.gastos_p, y:aa.gastos_r!=null?-Math.abs(aa.gastos_r):null, higher:true,tp:'$'},
+    {lbl:'Gastos %',      r:d.gastos_pct_r,p:d.gastos_pct_p,y:aa.gastos_pct_r,higher:true,tp:'pct'},
+    {lbl:'EBITDA $',      r:d.ebitda_r,  p:d.ebitda_p,  y:aa.ebitda_r,  higher:true, tp:'$'},
+    {lbl:'EBITDA %',      r:d.ebitda_pct_r,p:d.ebitda_pct_p,y:aa.ebitda_pct_r,higher:true,tp:'pct'},
+    {lbl:'Net Profit $',  r:d.np_r,      p:d.np_p,      y:aa.np_r,      higher:true, tp:'$'},
+    {lbl:'Net Profit %',  r:d.np_pct_r,  p:d.np_pct_p,  y:aa.np_pct_r,  higher:true, tp:'pct'},
+  ];
+  function cellDevN(diff,higher,isPct){
+    if(diff==null||isNaN(diff))return '<td class="dev zero">—</td>';
+    const good=higher?diff>0:diff<0, cls=diff===0?'zero':(good?'pos':'neg'), pre=diff>0?'+':'';
+    const txt=isPct?`${pre}${diff.toFixed(1)}pp`:`${pre}${fmt(Math.round(diff))}M`;
+    return `<td class="dev ${cls}">${txt}</td>`;
+  }
+  function cellDevP(diff,base,higher,isPct){
+    if(isPct)return '<td class="dev zero"></td>';   // rubros % muestran solo la variación en pp
+    if(diff==null||base==null||base===0||isNaN(diff))return '<td class="dev zero">—</td>';
+    const good=higher?diff>0:diff<0, cls=diff===0?'zero':(good?'pos':'neg'), pre=diff>0?'+':'';
+    return `<td class="dev ${cls}">${pre}${((diff/Math.abs(base))*100).toFixed(1)}%</td>`;
+  }
+  const tbody=rows.map(row=>{
+    const isPct=row.tp==='pct';
+    const rStr=isPct?fmtp(row.r):'$'+fmt(row.r)+'M';
+    const dP=row.r-row.p;                         // desvío vs ppto
+    const dY=(row.y!=null)?row.r-row.y:null;      // desvío vs año anterior
+    return `<tr><td class="rub">${row.lbl}</td><td class="num">${rStr}</td>${cellDevN(dP,row.higher,isPct)}${cellDevP(dP,row.r,row.higher,isPct)}${cellDevN(dY,row.higher,isPct)}${cellDevP(dY,row.r,row.higher,isPct)}</tr>`;
+  }).join('');
+  document.getElementById('pl-table').innerHTML=
+    `<div class="pl2-scroll"><table class="pl3"><thead>
+       <tr><th class="h-rub" rowspan="2">Rubro</th><th rowspan="2" style="text-align:right">Real 2026<br><span class="sub">nominal</span></th>
+       <th class="grp" colspan="2">Desvío vs PPTO</th><th class="grp" colspan="2">Desvío vs Año Anterior</th></tr>
+       <tr><th class="sub">nominal</th><th class="sub">%</th><th class="sub">nominal</th><th class="sub">%</th></tr>
+     </thead><tbody>${tbody}</tbody></table></div>
+     <div style="color:#888780;font-size:10px;margin-top:6px">Abril 2026 · ARS millones · ligada a segmentadores${aa.venta_r==null?' · Año Anterior pendiente de cargar en Sheet':''}</div>`;
+}
+
+/* ===== TABLA NUEVA estática (estilo EERR, no usa segmentadores) ===== */
+const PL2_RUBROS=[
+  {k:'venta',  n:'VENTA P&L',                      t:'m',higher:true},
+  {k:'costo',  n:'COSTO',                           t:'m',higher:true},
+  {k:'costop', n:'COSTO %',                         t:'p',higher:true},
+  {k:'comis',  n:'Comisiones Obras Sociales/Bonos', t:'m',higher:true},
+  {k:'mbf',    n:'Margen Bruto Final',              t:'m',higher:true},
+  {k:'mbfp',   n:'Margen Bruto Final %',            t:'p',higher:true},
+  {k:'iibb',   n:'IIBB',                            t:'m',higher:true},
+  {k:'gvar',   n:'Gastos Variables',                t:'m',higher:true},
+  {k:'cmarg',  n:'Contribución Marginal',           t:'m',higher:true},
+  {k:'gfij',   n:'Gastos Fijos',                    t:'m',higher:true},
+  {k:'gtos',   n:'GASTOS',                          t:'m',higher:true},
+  {k:'gtosp',  n:'GASTOS %',                        t:'p',higher:true},
+  {k:'ebitda', n:'EBITDA',                          t:'m',higher:true},
+  {k:'ebitdap',n:'EBITDA %',                        t:'p',higher:true},
+  {k:'np',     n:'NET PROFIT (AIG)',                t:'m',higher:true},
+  {k:'npp',    n:'NET PROFIT %',                    t:'p',higher:true},
+];
+const PL2_SUBT={mbf:1,cmarg:1,gtos:1,ebitda:1,np:1};
+window.pl2ytd=false;
+const MESN={1:'Enero',2:'Febrero',3:'Marzo',4:'Abril',5:'Mayo'};
+
+function pl2get(per,rub,unidad,esc){
+  // PL2[per][rub] = {act:{fpl,lider,mdq}, ppto:{fpl,lider,mdq}}
+  try{ return PL2[per][rub][esc][unidad]||0; }catch(e){ return 0; }
+}
+window.renderPL2=function(){
+  const per=window.pl2ytd?'ytd':document.getElementById('pl2-mes').value;
+  const body=document.getElementById('pl2-body');
+  function fM(v){return v===0?'0':fmt(v);}
+  function fP(v){return (v>0?'+':'')+v.toFixed(1)+'%';}
+  let html='';
+  PL2_RUBROS.forEach(r=>{
+    const isP=r.t==='p', f=isP?fP:fM;
+    const aF=pl2get(per,r.k,'fpl','act'), aL=pl2get(per,r.k,'lider','act'), aM=pl2get(per,r.k,'mdq','act');
+    const pF=pl2get(per,r.k,'fpl','ppto'),pL=pl2get(per,r.k,'lider','ppto'),pM=pl2get(per,r.k,'mdq','ppto');
+    const aT=isP?aF:(aF+aL+aM), pT=isP?pF:(pF+pL+pM);
+    function dCell(a,p){
+      if(p===0&&a===0)return '<td class="dev zero">0</td>';
+      const dv=a-p, good=r.higher?dv>0:dv<0, cls=dv===0?'zero':(good?'pos':'neg');
+      if(isP){
+        // rubros que ya son % (COSTO %, MBF %, etc.): mostrar SOLO la variación en pp, sin nada debajo
+        return `<td class="dev ${cls}">${(dv>0?'+':'')+dv.toFixed(1)}pp</td>`;
+      }
+      const nom=(dv>0?'+':'')+fmt(dv);
+      // % de desvío sobre el REAL (a), no sobre el ppto
+      const pc=(a!==0)?`<span class="pct">${dv>0?'+':''}${((dv/Math.abs(a))*100).toFixed(1)}%</span>`:'';
+      return `<td class="dev ${cls}">${nom}${pc}</td>`;
+    }
+    html+=`<tr class="${PL2_SUBT[r.k]?'subt':''}"><td class="rub">${r.n}</td>`+
+      `<td class="num">${f(aF)}</td><td class="num">${f(aL)}</td><td class="num">${f(aM)}</td><td class="num">${f(aT)}</td>`+
+      dCell(aF,pF)+dCell(aL,pL)+dCell(aM,pM)+dCell(aT,pT)+`</tr>`;
+  });
+  body.innerHTML=html;
+  const foot=document.getElementById('pl2-foot');
+  foot.textContent=(window.pl2ytd?('YTD acumulado · Ene–'+MESN[ULTIMO_REAL]):(MESN[per]+' 2026'))+' · ARS millones · Farmaplus Bs.As. = Farma AMBA + Ecommerce + Mayorista · Total = Fpl + Lider + MDQ';
+};
+window.togglePL2YTD=function(){
+  window.pl2ytd=!window.pl2ytd;
+  document.getElementById('pl2-ytd-btn').className=window.pl2ytd?'act':'';
+  const sel=document.getElementById('pl2-mes'); sel.disabled=window.pl2ytd;
+  window.renderPL2();
+};
+window.togglePL2=function(){
+  const c=document.getElementById('pl2-content'), b=document.getElementById('pl2-tgl-btn');
+  const hid=c.classList.toggle('pl2-collapsed');
+  b.textContent=hid?'▼ Mostrar':'▲ Ocultar';
+};
+
+/* ===== orquestador (de tu script.js) ===== */
+function setView(v){
+  document.querySelectorAll('.seg-btn').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  const d=D[v];
+  buildTable(v);                       // tabla primero (no depende de Chart)
+  try{ buildKPIs('kpi-ytd','kpi-abr',v); }catch(e){console.error('kpi',e);}
+  const C=(typeof Chart!=='undefined');
+  if(C){
+    buildBarChart('cUnitVentaYtd',UNITS.labels,UNITS.ytd.venta_r,UNITS.ytd.venta_p,UNITS.colors);
+    buildBarChart('cUnitEbitdaYtd',UNITS.labels,UNITS.ytd.ebitda_r,UNITS.ytd.ebitda_p,UNITS.colors);
+    buildBarChart('cUnitVentaAbr',UNITS.labels,UNITS.abr.venta_r,UNITS.abr.venta_p,UNITS.colors);
+    buildBarChart('cUnitEbitdaAbr',UNITS.labels,UNITS.abr.ebitda_r,UNITS.abr.ebitda_p,UNITS.colors);
+    buildLineChart('cVenta',d.venta.real,d.venta.ppto,false);
+    buildLineChart('cMbf',d.mbf.real,d.mbf.ppto,false);
+    buildLineChart('cGastos',d.gastos.real,d.gastos.ppto,true);
+    buildLineChart('cEbitda',d.ebitda.real,d.ebitda.ppto,false);
+  }
+  buildShareRow('share-venta-ytd',UNITS.ytd.venta_r);
+  buildShareRow('share-ebitda-ytd',UNITS.ytd.ebitda_r);
+  buildShareRow('share-venta-abr',UNITS.abr.venta_r);
+  buildShareRow('share-ebitda-abr',UNITS.abr.ebitda_r);
+  if(C)setTimeout(()=>{
+    // % s/venta de Margen Bruto, calculado desde series mbf y venta (no viene en datos)
+    const mbfPctR=d.mbf.real.map((v,i)=>(v===null||!d.venta.real[i])?null:v/d.venta.real[i]*100);
+    const mbfPctP=d.mbf.ppto.map((v,i)=>(v===null||!d.venta.ppto[i])?null:v/d.venta.ppto[i]*100);
+    buildPctRow('pt-mbf','cMbf',mbfPctR,mbfPctP);
+    buildPctRow('pt-gastos','cGastos',d.gastos_pct.real,d.gastos_pct.ppto);
+    buildPctRow('pt-ebitda','cEbitda',d.ebitda_pct.real,d.ebitda_pct.ppto);
+  },400);
+}
+
+/* ===== Conexión a Sheets (descomentar cuando la API entregue D, UNITS, PL2) =====
+async function cargarDatos(){
+  try{
+    const r=await fetch(API_URL); const j=await r.json();
+    D=j.D; UNITS=j.UNITS; PL2=j.PL2||{}; ULTIMO_REAL=j.ultimo_real||4;
+    initTablero();
+  }catch(e){console.error("Error al cargar la base:",e);}
+}
+*/
+
+function initTablero(){
+  try{ setView('Consolidado'); }catch(e){ console.error('setView:',e); buildTable('Consolidado'); }
+  try{ renderPL2(); }catch(e){ console.error('renderPL2:',e); }
+}
+document.querySelectorAll('.seg-btn').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.v)));
+
+/* === DATOS DEMO embebidos (se ven sin internet). Reemplazar por cargarDatos() === */
+EMBED_DATA();
+window.addEventListener('load',initTablero);
+
+function EMBED_DATA(){
+  D={"Farmacias BA": {"venta": {"real": [27612.415952839994, 24866.036816020012, 29236.479980065724, 30059.218077330002, null], "ppto": [26812.94837704133, 24441.776769674052, 28526.16423048934, 29154.002026081776, 30956.55048309976]}, "mbf": {"real": [6919.3504525983935, 6328.124614521632, 6985.393000675724, 7328.556337199991, null], "ppto": [6931.147155465183, 6318.199294960743, 7374.013453581497, 7536.309523742141, 8002.2682998812925]}, "gastos": {"real": [5761.131888339887, 5567.486594299081, 6043.656539783366, 6187.677543287313, null], "ppto": [5635.936180875672, 5639.307176715953, 5958.979418033514, 6015.85438284824, 6031.125752411632]}, "gastos_pct": {"real": [-20.864280395382583, -22.389923394274927, -20.67162854045393, -20.584958422301487, null], "ppto": [-21.019457098203567, -23.07241093746049, -20.88952222908552, -20.634746397651792, -19.482551053949727]}, "ebitda": {"real": [695.4181736985065, 347.5850230925507, 455.5745826223583, 646.2736343826782, null], "ppto": [831.3469676666955, 256.04938012942876, 921.5313943605179, 1016.0909058426869, 1435.5942241120356]}, "ebitda_pct": {"real": [2.518498109278921, 1.3978304048380485, 1.5582401948968625, 2.1500014828066454, null], "ppto": [3.1005429017964277, 1.0475890625395126, 3.2304777709144874, 3.485253602348216, 4.63744894605029]}, "ytd": {"venta_r": 111774.15082625573, "venta_p": 108934.89140328651, "mbf_pct_r": 24.65813804109131, "mbf_pct_p": 25.85, "gastos_pct_r": -21.078176297068694, "gastos_pct_p": -21.343094814681145, "ebitda_r": 2144.8514137960938, "ebitda_p": 3025.018647999329, "ebitda_pct_r": 1.9189154182259003, "ebitda_pct_p": 2.7769051853188573, "np_pct_r": -0.17729975555907546, "np_pct_p": 0.8696165853941742}, "abr": {"venta_r": 30059.218077330002, "venta_p": 29154.002026081776, "mbf_r": 7328.556337199991, "mbf_p": 7536.309523742141, "mbf_pct_r": 24.3803957852351, "mbf_pct_p": 25.850000000000005, "gastos_r": 6187.677543287313, "gastos_p": 6015.85438284824, "gastos_pct_r": -20.584958422301487, "gastos_pct_p": -20.634746397651792, "ebitda_r": 646.2736343826782, "ebitda_p": 1016.0909058426869, "ebitda_pct_r": 2.1500014828066454, "ebitda_pct_p": 3.485253602348216, "np_r": 68.95762180823385, "np_p": 570.4236700385892, "np_pct_r": 0.22940590680314527, "np_pct_p": 1.9565878795243148}, "aa": {"venta_r": 21800.915265231655, "mbf_pct_r": 26.351282054141727, "gastos_r": 4589.488217529616, "gastos_pct_r": -21.051814392623154, "ebitda_r": 792.0903478054579, "ebitda_pct_r": 3.633289420048765, "np_r": 428.2532349222507, "np_pct_r": 1.9643819065029524}}, "Ecommerce": {"venta": {"real": [835.5532567700001, 787.81910978, 968.80485484, 861.88006984, null], "ppto": [810.7604332912882, 702.719035380518, 1055.7971736803972, 938.6256275902686, 1455.978319952913]}, "mbf": {"real": [305.81487513000025, 318.52099776, 407.94025259419004, 364.65072117999995, null], "ppto": [308.8997250839808, 267.73595247997736, 402.2587231722314, 357.61636411189227, 554.7277399020599]}, "gastos": {"real": [286.5418885635, 245.1957790477, 317.48691944300003, 304.82568022, null], "ppto": [284.41548197283305, 253.80931208286665, 338.2081114914038, 306.7967169785841, 438.5881838836775]}, "gastos_pct": {"real": [-34.293671437675386, -31.123360172891896, -32.77098766143504, -35.36752860251055, null], "ppto": [-35.08008904902354, -36.11817800629671, -32.03343595933735, -32.68573837752785, -30.12326336685162]}, "ebitda": {"real": [-18.49224124349975, 33.93426322329999, 44.769806481190045, 20.07937198999994, null], "ppto": [-16.05377855341672, -21.20931137191519, 11.260752996807696, 3.8883657537947727, 43.340640020736714]}, "ebitda_pct": {"real": [-2.213173258995512, 4.307367364162594, 4.62113770977994, 2.329717636205173, null], "ppto": [-1.9800890490235545, -3.01817800629671, 1.0665640406626495, 0.4142616224721421, 2.976736633148382]}, "ytd": {"venta_r": 3454.0572912300004, "venta_p": 3507.9022699424722, "mbf_pct_r": 40.443071115555824, "mbf_pct_p": 38.09999999999999, "gastos_pct_r": -33.41143964821843, "gastos_pct_p": -33.730404426149875, "ebitda_r": 80.29120045099023, "ebitda_p": -22.113971174729443, "ebitda_pct_r": 2.3245474432301116, "ebitda_pct_p": -0.6304044261498796, "np_pct_r": 2.1403028103701343, "np_pct_p": -1.2128179916809272}, "abr": {"venta_r": 861.88006984, "venta_p": 938.6256275902686, "mbf_r": 364.65072117999995, "mbf_p": 357.61636411189227, "mbf_pct_r": 42.308754308206005, "mbf_pct_p": 38.099999999999994, "gastos_r": 304.82568022, "gastos_p": 306.7967169785841, "gastos_pct_r": -35.36752860251055, "gastos_pct_p": -32.68573837752785, "ebitda_r": 20.07937198999994, "ebitda_p": 3.8883657537947727, "ebitda_pct_r": 2.329717636205173, "ebitda_pct_p": 0.4142616224721421, "np_r": 15.799393124999941, "np_p": -1.3765069017955929, "np_pct_r": 1.8331312763657421, "np_pct_p": -0.14665132309773982}, "aa": {"venta_r": 4611.717437, "mbf_pct_r": 9.277627583322374, "gastos_r": 0.0, "gastos_pct_r": -0.0, "ebitda_r": 427.8579689999997, "ebitda_pct_r": 9.277627583322374, "np_r": 427.8579689999997, "np_pct_r": 9.277627583322374}}, "Mayorista": {"venta": {"real": [4263.931715, 4251.64292, 4215.020175, 4453.137522, null], "ppto": [3000.0, 3000.0, 3000.0, 4000.0, 4000.0]}, "mbf": {"real": [390.5119850000001, 413.2304250000002, 392.5090779999996, 478.75737400000025, null], "ppto": [300.0, 300.0, 300.0, 400.0, 400.0]}, "gastos": {"real": [0.0, 0.0, 0.0, 0.0, null], "ppto": [0.0, 0.0, 0.0, 0.0, 0.0]}, "gastos_pct": {"real": [-0.0, -0.0, -0.0, -0.0, null], "ppto": [-0.0, -0.0, -0.0, -0.0, -0.0]}, "ebitda": {"real": [390.5119850000001, 413.2304250000002, 392.5090779999996, 478.75737400000025, null], "ppto": [300.0, 300.0, 300.0, 400.0, 400.0]}, "ebitda_pct": {"real": [9.158495283266985, 9.719311634947935, 9.312151821432257, 10.751012553166783, null], "ppto": [10.0, 10.0, 10.0, 10.0, 10.0]}, "ytd": {"venta_r": 17183.732332, "venta_p": 13000.0, "mbf_pct_r": 9.74764288478094, "mbf_pct_p": 10.0, "gastos_pct_r": -0.0, "gastos_pct_p": -0.0, "ebitda_r": 1675.0088620000001, "ebitda_p": 1300.0, "ebitda_pct_r": 9.74764288478094, "ebitda_pct_p": 10.0, "np_pct_r": 9.74764288478094, "np_pct_p": 10.0}, "abr": {"venta_r": 4453.137522, "venta_p": 4000.0, "mbf_r": 478.75737400000025, "mbf_p": 400.0, "mbf_pct_r": 10.751012553166783, "mbf_pct_p": 10.0, "gastos_r": 0.0, "gastos_p": 0.0, "gastos_pct_r": -0.0, "gastos_pct_p": -0.0, "ebitda_r": 478.75737400000025, "ebitda_p": 400.0, "ebitda_pct_r": 10.751012553166783, "ebitda_pct_p": 10.0, "np_r": 478.75737400000025, "np_p": 400.0, "np_pct_r": 10.751012553166783, "np_pct_p": 10.0}, "aa": {"venta_r": 4611.717437, "mbf_pct_r": 9.277627583322374, "gastos_r": 0.0, "gastos_pct_r": -0.0, "ebitda_r": 427.8579689999997, "ebitda_pct_r": 9.277627583322374, "np_r": 427.8579689999997, "np_pct_r": 9.277627583322374}}, "Lider": {"venta": {"real": [9528.807528089996, 8467.057653339998, 9876.29244298, 9960.47527203, null], "ppto": [8938.797055580795, 8189.317597892693, 9211.225694876699, 9591.447881952918, 10329.032796062605]}, "mbf": {"real": [2741.965639276218, 2329.8417162957194, 2809.9058100168404, 2820.89576599, null], "ppto": [2512.2511461184304, 2294.902103388882, 2591.255451514242, 2701.5198857663463, 2915.4195108581553]}, "gastos": {"real": [1847.9802591200003, 1814.9490093299999, 1825.79752591, 1917.95131826, null], "ppto": [1815.3846574228085, 1817.6737634435697, 1908.855378649997, 1940.6612608015, 1962.0966473959165]}, "gastos_pct": {"real": [-19.393615136755933, -21.43541574461888, -18.48666932911413, -19.255620498810906, null], "ppto": [-20.30904881422945, -22.195668219184718, -20.723141977855413, -20.233246165607703, -18.99593782046913]}, "ebitda": {"real": [649.2390393162182, 320.2833161257197, 733.9556287768403, 655.3772080100002, null], "ppto": [464.45776525052133, 264.30608240010247, 442.9082047974507, 511.4809800340704, 684.7680107646108]}, "ebitda_pct": {"real": [6.813434287578217, 3.782699129246836, 7.431489427983988, 6.579778475534839, null], "ppto": [5.195976174003688, 3.2274494088263808, 4.808352541440788, 5.332677467772755, 6.629546292327023]}, "ytd": {"venta_r": 37832.632896439995, "venta_p": 35930.78823030311, "mbf_pct_r": 28.289357922498386, "mbf_pct_p": 28.109398886690386, "gastos_pct_r": -19.577485217310794, "gastos_pct_p": -20.824967747318336, "ebitda_r": 2358.8551922287784, "ebitda_p": 1683.153032482145, "ebitda_pct_r": 6.234974971701597, "ebitda_pct_p": 4.6844311393720455, "np_pct_r": 5.1899405677959916, "np_pct_p": 4.12682928842233}, "abr": {"venta_r": 9960.47527203, "venta_p": 9591.447881952918, "mbf_r": 2820.89576599, "mbf_p": 2701.5198857663463, "mbf_pct_r": 28.320895227874864, "mbf_pct_p": 28.16592363338046, "gastos_r": 1917.95131826, "gastos_p": 1940.6612608015, "gastos_pct_r": -19.255620498810906, "gastos_pct_p": -20.233246165607703, "ebitda_r": 655.3772080100002, "ebitda_p": 511.4809800340704, "ebitda_pct_r": 6.579778475534839, "ebitda_pct_p": 5.332677467772755, "np_r": 552.6123521547233, "np_p": 458.54118195111346, "np_pct_r": 5.548052046336719, "np_pct_p": 4.780729537340193}, "aa": {"venta_r": 7028.804549289999, "mbf_pct_r": 27.614171557467195, "gastos_r": 1343.07351216, "gastos_pct_r": -19.10813571129486, "ebitda_r": 411.5530855799991, "ebitda_pct_r": 5.85523587537473, "np_r": 385.1468540199991, "np_pct_r": 5.479549919465381}}, "MDQ": {"venta": {"real": [6793.940213000001, 5700.776227490001, 5703.07210769438, 5393.2087952105785, null], "ppto": [6348.785338457393, 5323.34170590325, 5196.3386418322625, 4879.649185225814, 5162.482566084958]}, "mbf": {"real": [2061.006404450001, 1588.2164810900003, 1788.4060023843804, 1632.3169201223614, null], "ppto": [1904.6356015372178, 1597.0025117709752, 1558.9015925496788, 1463.8947555677437, 1548.7447698254873]}, "gastos": {"real": [733.8049409583635, 699.6753693936479, 690.0331289277286, 727.9247658332423, null], "ppto": [1207.9477844775815, 956.3918324885427, 937.0133814217988, 854.6980711024701, 904.7924423896214]}, "gastos_pct": {"real": [-10.800874278437862, -12.273335094608836, -12.099323240131591, -13.497062573948066, null], "ppto": [-19.026439233352388, -17.96600491431847, -18.032184697866455, -17.515563899352685, -17.526305044276082]}, "ebitda": {"real": [1133.8521556183873, 724.6135178928524, 939.2546952404017, 756.4130199813691, null], "ppto": [499.875471567457, 475.58708639943166, 460.8017132310798, 457.9275597232735, 483.91536788723226]}, "ebitda_pct": {"real": [16.689168878006832, 12.710786899486722, 16.46927616386251, 14.025287147293447, null], "ppto": [7.873560766647611, 8.93399508568153, 8.867815302133545, 9.384436100647306, 9.373694955723915]}, "ytd": {"venta_r": 23590.99734339496, "venta_p": 21748.11487141872, "mbf_pct_r": 29.968829656225605, "mbf_pct_p": 30.0, "gastos_pct_r": -12.086976076538502, "gastos_pct_p": -18.19031715107142, "ebitda_r": 3554.1333887330106, "ebitda_p": 1894.191830921242, "ebitda_pct_r": 15.065634305317326, "ebitda_pct_p": 8.70968284892858, "np_pct_r": 14.495306357662033, "np_pct_p": 8.049505561173056}, "abr": {"venta_r": 5393.2087952105785, "venta_p": 4879.649185225814, "mbf_r": 1632.3169201223614, "mbf_p": 1463.8947555677437, "mbf_pct_r": 30.266154753213613, "mbf_pct_p": 29.99999999999999, "gastos_r": 727.9247658332423, "gastos_p": 854.6980711024701, "gastos_pct_r": -13.497062573948066, "gastos_pct_p": -17.515563899352685, "ebitda_r": 756.4130199813691, "ebitda_p": 457.9275597232735, "ebitda_pct_r": 14.025287147293447, "ebitda_pct_p": 9.384436100647306, "np_r": 713.5949665613691, "np_p": 422.17189580043504, "np_pct_r": 13.231361767322541, "np_pct_p": 8.651685393258415}, "aa": {"venta_r": 3879.3924828054055, "mbf_pct_r": 30.000000000000004, "gastos_r": 711.7901490294826, "gastos_pct_r": -18.347979797979793, "ebitda_r": 335.64582132797705, "ebitda_pct_r": 8.652020202020209, "np_r": 310.3513986244327, "np_pct_r": 8.000000000000007}}, "Bs As": {"venta": {"real": [35979.163189859995, 32597.485703620012, 37533.07594436572, 38608.199347530004, null], "ppto": [33321.23435118317, 30628.834874282235, 35467.18242025591, 37090.30637091703, 39650.89486640559]}, "mbf": {"real": [8471.401689535143, 7743.730183701572, 8480.419456479913, 8956.722489199989, null], "ppto": [8246.798572252008, 7536.832083578369, 8832.200082968306, 9079.317711772219, 9805.447948381818]}, "gastos": {"real": [6547.8595602223895, 6306.7279523451825, 6918.715750029368, 7035.175409040316, null], "ppto": [6456.367753546427, 6432.845479142141, 6849.657090665305, 6884.656120950371, 7042.525848460715]}, "gastos_pct": {"real": [-18.199032383465138, -19.34728343678607, -18.43364972347269, -18.221972347670228, null], "ppto": [-19.3761362064223, -21.002579776691196, -19.31266208153414, -18.561874501928393, -17.76132889860079]}, "ebitda": {"real": [1362.006376802755, 938.7945021544494, 964.9155806305462, 1321.3514413096734, null], "ppto": [1218.9287901182015, 584.3079145518401, 1364.4504924315156, 1568.8660743911203, 2074.1748605658313]}, "ebitda_pct": {"real": [3.7855421195193593, 2.8799598554627006, 2.5708406688032035, 3.4224632685290155, null], "ppto": [3.6581141540902125, 1.9077053271865045, 3.8470789031503525, 4.2298547191869185, 5.23109217977117]}, "ytd": {"venta_r": 144717.92418537574, "venta_p": 136507.55801663836, "mbf_pct_r": 23.253701300890615, "mbf_pct_p": 24.68372370009281, "gastos_pct_r": -18.52464290276653, "gastos_pct_p": -19.50333507618619, "ebitda_r": 4587.067900897424, "ebitda_p": 4736.553271492678, "ebitda_pct_r": 3.1696612059067686, "ebitda_pct_p": 3.4698102730072704, "np_pct_r": 1.5178973237961408, "np_pct_p": 1.9038102029024488}, "abr": {"venta_r": 38608.199347530004, "venta_p": 37090.30637091703, "mbf_r": 8956.722489199989, "mbf_p": 9079.317711772219, "mbf_pct_r": 23.199016376227355, "mbf_pct_p": 24.47895043242734, "gastos_r": 7035.175409040316, "gastos_p": 6884.656120950371, "gastos_pct_r": -18.221972347670228, "gastos_pct_p": -18.561874501928393, "ebitda_r": 1321.3514413096734, "ebitda_p": 1568.8660743911203, "ebitda_pct_r": 3.4224632685290155, "ebitda_pct_p": 4.2298547191869185, "np_r": 725.636905720229, "np_p": 1108.9177362089515, "np_pct_r": 1.8794891188486686, "np_pct_p": 2.9897777740613853}, "aa": {"venta_r": 33088.51337455856, "mbf_pct_r": 21.592874794327805, "gastos_r": 5023.695317002151, "gastos_pct_r": -15.182596027009243, "ebitda_r": 1723.8306599801297, "ebitda_pct_r": 5.209755544066136, "np_r": 1280.9533645169226, "np_pct_r": 3.8712931887167685}}, "Consolidado": {"venta": {"real": [52301.91093094999, 46765.319584450015, 53112.4404950401, 53961.883414770586, null], "ppto": [48608.81674522136, 44141.49417807818, 49874.74675696487, 51561.40343809576, 55142.410228553155]}, "mbf": {"real": [13274.373733261362, 11661.788381087292, 13078.731268881133, 13409.93517531235, null], "ppto": [12663.685319907658, 11428.736698738227, 12982.357127032226, 13244.732353106308, 14269.61222906546]}, "gastos": {"real": [9129.644760300753, 8821.35233106883, 9434.546404867096, 9681.051493133558, null], "ppto": [9479.700195446816, 9206.911075074255, 9695.5258507371, 9680.01545285434, 9909.414938246253]}, "ebitda": {"real": [3145.0975717373603, 1983.6913361730217, 2638.125904647788, 2733.141669301043, null], "ppto": [2183.2620269361796, 1324.201083351374, 2268.160410460046, 2538.274614148464, 3242.8582392176745]}, "gastos_pct": {"real": [-17.45566194006542, -18.863021592612032, -17.763345681221598, -17.940536690911042, null], "ppto": [-19.502018008654257, -20.857724113124036, -19.439749534935025, -18.773762557638864, -17.970587243419192]}, "ebitda_pct": {"real": [6.013351167779662, 4.241800021468518, 4.9670583389858525, 5.0649486199233, null], "ppto": [4.491493875235735, 2.99990090505139, 4.547713137296889, 4.922819095092898, 5.880878666305554]}, "ytd": {"venta_r": 206141.5544252107, "venta_p": 194186.4611183602, "mbf_pct_r": 24.946366928264986, "mbf_pct_p": 25.91298652284196, "gastos_pct_r": -17.981136841974383, "gastos_pct_p": -19.600827140524967, "ebitda_r": 10500.056481859214, "ebitda_p": 8313.898134896064, "ebitda_pct_r": 5.09361468197752, "ebitda_pct_p": 4.281399479147308, "np_pct_r": 3.676962667575015, "np_pct_p": 3.0034343238652337}, "abr": {"venta_r": 53961.883414770586, "venta_p": 51561.40343809576, "mbf_r": 13409.93517531235, "mbf_p": 13244.732353106308, "mbf_pct_r": 24.850754508026952, "mbf_pct_p": 25.687299937457748, "gastos_r": 9681.051493133558, "gastos_p": 9680.01545285434, "gastos_pct_r": -17.940536690911042, "gastos_pct_p": -18.773762557638864, "ebitda_r": 2733.141669301043, "ebitda_p": 2538.274614148464, "ebitda_pct_r": 5.0649486199233, "ebitda_pct_p": 4.922819095092898, "np_r": 1991.8442244363214, "np_p": 1989.6308139605, "np_pct_r": 3.6912059001467483, "np_pct_p": 3.858760005144616}, "aa": {"venta_r": 43996.71040665397, "mbf_pct_r": 23.296117052979362, "gastos_r": 7078.558978191633, "gastos_pct_r": -16.088836898862983, "ebitda_r": 2471.029566888106, "ebitda_pct_r": 5.616396189735114, "np_r": 1976.4516171613545, "np_pct_r": 4.492271351410946}}};
+  UNITS={"labels": ["Farmacias BA", "Ecommerce", "Mayorista", "Lider", "MDQ"], "colors": ["#7F77DD", "#BA7517", "#639922", "#1D9E75", "#EF9F27"], "ytd": {"venta_r": [111774.15082625573, 3454.0572912300004, 17183.732332, 37832.632896439995, 23590.99734339496], "venta_p": [108934.89140328651, 3507.9022699424722, 13000.0, 35930.78823030311, 21748.11487141872], "ebitda_r": [2144.8514137960938, 80.29120045099023, 1675.0088620000001, 2358.8551922287784, 3554.1333887330106], "ebitda_p": [3025.018647999329, -22.113971174729443, 1300.0, 1683.153032482145, 1894.191830921242]}, "abr": {"venta_r": [30059.218077330002, 861.88006984, 4453.137522, 9960.47527203, 5393.2087952105785], "venta_p": [29154.002026081776, 938.6256275902686, 4000.0, 9591.447881952918, 4879.649185225814], "ebitda_r": [646.2736343826782, 20.07937198999994, 478.75737400000025, 655.3772080100002, 756.4130199813691], "ebitda_p": [1016.0909058426869, 3.8883657537947727, 400.0, 511.4809800340704, 457.9275597232735]}};
+  PL2={"1": {"venta": {"act": {"fpl": 35979.163189859995, "lider": 9528.807528089996, "mdq": 6793.940213000001}, "ppto": {"fpl": 33321.23435118317, "lider": 8938.797055580795, "mdq": 6348.785338457393}}, "costo": {"act": {"fpl": -23611.106760664854, "lider": -6117.494433033778, "mdq": -4328.07621615}, "ppto": {"fpl": -21493.20294676577, "lider": -5738.707709682871, "mdq": -3936.2469098435836}}, "costop": {"act": {"fpl": -65.62439108455743, "lider": -64.2, "mdq": -63.70495000630644}, "ppto": {"fpl": -64.5030214674583, "lider": -64.2, "mdq": -62.0}}, "comis": {"act": {"fpl": -3896.6547396599994, "lider": -669.34745578, "mdq": -404.8575924}, "ppto": {"fpl": -3581.232832165392, "lider": -687.8381997794941, "mdq": -507.9028270765914}}, "mbf": {"act": {"fpl": 8471.401689535143, "lider": 2741.965639276218, "mdq": 2061.006404450001}, "ppto": {"fpl": 8246.798572252008, "lider": 2512.2511461184304, "mdq": 1904.6356015372178}}, "mbfp": {"act": {"fpl": 23.545299385736236, "lider": 28.775538084835595, "mdq": 30.335951448414676}, "ppto": {"fpl": 24.74937898559325, "lider": 28.105024988233136, "mdq": 30.0}}, "iibb": {"act": {"fpl": -561.5357525100001, "lider": -244.74634084, "mdq": -193.34930787324998}, "ppto": {"fpl": -571.5020285873794, "lider": -232.4087234451007, "mdq": -196.81234549217916}}, "gvar": {"act": {"fpl": -766.08093592, "lider": -203.26254712999997, "mdq": -137.12619642383598}, "ppto": {"fpl": -712.917330324445, "lider": -169.83714405603513, "mdq": -144.95373413730977}}, "cmarg": {"act": {"fpl": 7143.785001105145, "lider": 2293.9567513062184, "mdq": 1730.530900152915}, "ppto": {"fpl": 6962.379213340184, "lider": 2110.0052786172946, "mdq": 1562.8695219077288}}, "gfij": {"act": {"fpl": -5781.778624302389, "lider": -1644.7177119900002, "mdq": -596.6787445345276}, "ppto": {"fpl": -5743.450423221982, "lider": -1645.5475133667733, "mdq": -1062.9940503402718}}, "gtos": {"act": {"fpl": -6547.8595602223895, "lider": -1847.9802591200003, "mdq": -733.8049409583635}, "ppto": {"fpl": -6456.367753546427, "lider": -1815.3846574228085, "mdq": -1207.9477844775815}}, "gtosp": {"act": {"fpl": -18.199032383465138, "lider": -19.393615136755933, "mdq": -10.800874278437862}, "ppto": {"fpl": -19.3761362064223, "lider": -20.30904881422945, "mdq": -19.026439233352388}}, "ebitda": {"act": {"fpl": 1362.006376802755, "lider": 649.2390393162182, "mdq": 1133.8521556183873}, "ppto": {"fpl": 1218.9287901182015, "lider": 464.45776525052133, "mdq": 499.875471567457}}, "ebitdap": {"act": {"fpl": 3.7855421195193593, "lider": 6.813434287578217, "mdq": 16.689168878006832}, "ppto": {"fpl": 3.6581141540902125, "lider": 5.195976174003688, "mdq": 7.873560766647611}}, "np": {"act": {"fpl": 749.8303604685108, "lider": 540.5184643809414, "mdq": 1098.8098430883874}, "ppto": {"fpl": 633.482343414513, "lider": 415.05606737834006, "mdq": 462.06741573033713}}, "npp": {"act": {"fpl": 2.084068371773125, "lider": 5.672467019483243, "mdq": 16.1733811108}, "ppto": {"fpl": 1.901137084953215, "lider": 4.643310109822959, "mdq": 7.278044399003239}}}, "2": {"venta": {"act": {"fpl": 32597.485703620012, "lider": 8467.057653339998, "mdq": 5700.776227490001}, "ppto": {"fpl": 30628.834874282235, "lider": 8189.317597892693, "mdq": 5323.34170590325}}, "costo": {"act": {"fpl": -21418.53000028844, "lider": -5435.851013444279, "mdq": -3746.26167801}, "ppto": {"fpl": -19824.808645765057, "lider": -5257.541897847108, "mdq": -3300.471857660015}}, "costop": {"act": {"fpl": -65.70607989532724, "lider": -64.2, "mdq": -65.71494001018603}, "ppto": {"fpl": -64.72596403727759, "lider": -64.19999999999999, "mdq": -62.0}}, "comis": {"act": {"fpl": -3435.2255196300007, "lider": -701.3649236, "mdq": -366.29806838999997}, "ppto": {"fpl": -3267.194144938813, "lider": -636.8735966567031, "mdq": -425.86733647226}}, "mbf": {"act": {"fpl": 7743.730183701572, "lider": 2329.8417162957194, "mdq": 1588.2164810900003}, "ppto": {"fpl": 7536.832083578369, "lider": 2294.902103388882, "mdq": 1597.0025117709752}}, "mbfp": {"act": {"fpl": 23.755605736308723, "lider": 27.51654484573714, "mdq": 27.859653101824648}, "ppto": {"fpl": 24.606982650543898, "lider": 28.023117628011097, "mdq": 30.000000000000004}}, "iibb": {"act": {"fpl": -498.20772920194, "lider": -194.60939084, "mdq": -163.92759380349997}, "ppto": {"fpl": -519.678689884387, "lider": -212.92225754521002, "mdq": -165.02359288300076}}, "gvar": {"act": {"fpl": -601.7749253599999, "lider": -188.45261254000002, "mdq": -101.676683663648}, "ppto": {"fpl": -638.4466785070642, "lider": -155.59703435996116, "mdq": -114.76701989862511}}, "cmarg": {"act": {"fpl": 6643.747529139633, "lider": 1946.7797129157195, "mdq": 1322.6122036228523}, "ppto": {"fpl": 6378.706715186918, "lider": 1926.382811483711, "mdq": 1317.2118989893493}}, "gfij": {"act": {"fpl": -5704.953026985183, "lider": -1626.4963967899998, "mdq": -597.9986857299999}, "ppto": {"fpl": -5794.398800635077, "lider": -1662.0767290836086, "mdq": -841.6248125899176}}, "gtos": {"act": {"fpl": -6306.7279523451825, "lider": -1814.9490093299999, "mdq": -699.6753693936479}, "ppto": {"fpl": -6432.845479142141, "lider": -1817.6737634435697, "mdq": -956.3918324885427}}, "gtosp": {"act": {"fpl": -19.34728343678607, "lider": -21.43541574461888, "mdq": -12.273335094608836}, "ppto": {"fpl": -21.002579776691196, "lider": -22.195668219184718, "mdq": -17.96600491431847}}, "ebitda": {"act": {"fpl": 938.7945021544494, "lider": 320.2833161257197, "mdq": 724.6135178928524}, "ppto": {"fpl": 584.3079145518401, "lider": 264.30608240010247, "mdq": 475.58708639943166}}, "ebitdap": {"act": {"fpl": 2.8799598554627006, "lider": 3.782699129246836, "mdq": 12.710786899486722}, "ppto": {"fpl": 1.9077053271865045, "lider": 3.2274494088263808, "mdq": 8.93399508568153}}, "np": {"act": {"fpl": 364.17458618330505, "lider": 245.14567846044287, "mdq": 707.2944807028524}, "ppto": {"fpl": -59.058348235631215, "lider": 217.58447008204243, "mdq": 442.81460674157296}}, "npp": {"act": {"fpl": 1.1171861213297896, "lider": 2.8952876961188556, "mdq": 12.406985513519581}, "ppto": {"fpl": -0.19281944115092692, "lider": 2.6569304155212166, "mdq": 8.318357738533289}}}, "3": {"venta": {"act": {"fpl": 37533.07594436572, "lider": 9876.29244298, "mdq": 5703.07210769438}, "ppto": {"fpl": 35467.18242025591, "lider": 9211.225694876699, "mdq": 5196.3386418322625}}, "costo": {"act": {"fpl": -24937.07435779581, "lider": -6340.57974839316, "mdq": -3526.6393429799996}, "ppto": {"fpl": -22823.31593024837, "lider": -5913.606896110841, "mdq": -3221.729957936003}}, "costop": {"act": {"fpl": -66.44026296901264, "lider": -64.2, "mdq": -61.83753731996452}, "ppto": {"fpl": -64.35051891016182, "lider": -64.2, "mdq": -62.0}}, "comis": {"act": {"fpl": -4115.58213009, "lider": -725.80688457, "mdq": -388.02676233}, "ppto": {"fpl": -3811.6664070392367, "lider": -706.3633472516156, "mdq": -415.70709134658097}}, "mbf": {"act": {"fpl": 8480.419456479913, "lider": 2809.9058100168404, "mdq": 1788.4060023843804}, "ppto": {"fpl": 8832.200082968306, "lider": 2591.255451514242, "mdq": 1558.9015925496788}}, "mbfp": {"act": {"fpl": 22.594522945708505, "lider": 28.45101870200393, "mdq": 31.358642651063928}, "ppto": {"fpl": 24.9024576531461, "lider": 28.1314945192962, "mdq": 30.0}}, "iibb": {"act": {"fpl": -596.78812582, "lider": -250.15265533, "mdq": -159.11817821625002}, "ppto": {"fpl": -618.0924998714854, "lider": -239.49186806679418, "mdq": -161.08649789680013}}, "gvar": {"act": {"fpl": -850.4783095600001, "lider": -198.46280664, "mdq": -98.700828954296}, "ppto": {"fpl": -783.4904107419079, "lider": -175.0132882026573, "mdq": -112.44160577061585}}, "cmarg": {"act": {"fpl": 7033.1530210999135, "lider": 2361.2903480468403, "mdq": 1530.5869952138344}, "ppto": {"fpl": 7430.617172354913, "lider": 2176.7502952447903, "mdq": 1285.3734888822628}}, "gfij": {"act": {"fpl": -6068.237440469367, "lider": -1627.33471927, "mdq": -591.3322999734327}, "ppto": {"fpl": -6066.166679923398, "lider": -1733.8420904473396, "mdq": -824.571775651183}}, "gtos": {"act": {"fpl": -6918.715750029368, "lider": -1825.79752591, "mdq": -690.0331289277286}, "ppto": {"fpl": -6849.657090665305, "lider": -1908.855378649997, "mdq": -937.0133814217988}}, "gtosp": {"act": {"fpl": -18.43364972347269, "lider": -18.48666932911413, "mdq": -12.099323240131591}, "ppto": {"fpl": -19.31266208153414, "lider": -20.723141977855413, "mdq": -18.032184697866455}}, "ebitda": {"act": {"fpl": 964.9155806305462, "lider": 733.9556287768403, "mdq": 939.2546952404017}, "ppto": {"fpl": 1364.4504924315156, "lider": 442.9082047974507, "mdq": 460.8017132310798}}, "ebitdap": {"act": {"fpl": 2.5708406688032035, "lider": 7.431489427983988, "mdq": 16.46927616386251}, "ppto": {"fpl": 3.8470789031503525, "lider": 4.808352541440788, "mdq": 8.867815302133545}}, "np": {"act": {"fpl": 357.02764589110177, "lider": 625.2146675615635, "mdq": 899.8880474004017}, "ppto": {"fpl": 915.503085865908, "lider": 391.62057283765625, "mdq": 423.56179775280907}}, "npp": {"act": {"fpl": 0.9512347094075484, "lider": 6.330459240359591, "mdq": 15.77900525203434}, "ppto": {"fpl": 2.5812681566242732, "lider": 4.251557673323283, "mdq": 8.15115847806752}}}, "4": {"venta": {"act": {"fpl": 38608.199347530004, "lider": 9960.47527203, "mdq": 5393.2087952105785}, "ppto": {"fpl": 37090.30637091703, "lider": 9591.447881952918, "mdq": 4879.649185225814}}, "costo": {"act": {"fpl": -25556.353842230015, "lider": -6394.0, "mdq": -3372.896663169999}, "ppto": {"fpl": -24110.290144626026, "lider": -6157.709540213773, "mdq": -3025.382494840005}}, "costop": {"act": {"fpl": -66.19410973349372, "lider": -64.19372394764117, "mdq": -62.53970115463152}, "ppto": {"fpl": -65.00428954000553, "lider": -64.2, "mdq": -62.000000000000014}}, "comis": {"act": {"fpl": -4095.1230160999985, "lider": -745.57950604, "mdq": -387.99521191821793}, "ppto": {"fpl": -3900.698514518782, "lider": -732.2184559727984, "mdq": -390.37193481806514}}, "mbf": {"act": {"fpl": 8956.722489199989, "lider": 2820.89576599, "mdq": 1632.3169201223614}, "ppto": {"fpl": 9079.317711772219, "lider": 2701.5198857663463, "mdq": 1463.8947555677437}}, "mbfp": {"act": {"fpl": 23.199016376227355, "lider": 28.320895227874864, "mdq": 30.266154753213613}, "ppto": {"fpl": 24.47895043242734, "lider": 28.16592363338046, "mdq": 29.99999999999999}}, "iibb": {"act": {"fpl": -600.19563885, "lider": -247.56723972000003, "mdq": -147.97913430775003}, "ppto": {"fpl": -625.7955164307282, "lider": -249.3776449307759, "mdq": -151.26912474200026}}, "gvar": {"act": {"fpl": -787.9472557000001, "lider": -215.38236187, "mdq": -89.628674836016}, "ppto": {"fpl": -767.502569320307, "lider": -182.23750975710544, "mdq": -102.56376853229641}}, "cmarg": {"act": {"fpl": 7568.5795946499875, "lider": 2357.9461644000003, "mdq": 1394.7091109785954}, "ppto": {"fpl": 7686.019626021184, "lider": 2269.904731078465, "mdq": 1210.0618622934471}}, "gfij": {"act": {"fpl": -6247.228153340314, "lider": -1702.56895639, "mdq": -638.2960909972263}, "ppto": {"fpl": -6117.153551630064, "lider": -1758.4237510443945, "mdq": -752.1343025701736}}, "gtos": {"act": {"fpl": -7035.175409040316, "lider": -1917.95131826, "mdq": -727.9247658332423}, "ppto": {"fpl": -6884.656120950371, "lider": -1940.6612608015, "mdq": -854.6980711024701}}, "gtosp": {"act": {"fpl": -18.221972347670228, "lider": -19.255620498810906, "mdq": -13.497062573948066}, "ppto": {"fpl": -18.561874501928393, "lider": -20.233246165607703, "mdq": -17.515563899352685}}, "ebitda": {"act": {"fpl": 1321.3514413096734, "lider": 655.3772080100002, "mdq": 756.4130199813691}, "ppto": {"fpl": 1568.8660743911203, "lider": 511.4809800340704, "mdq": 457.9275597232735}}, "ebitdap": {"act": {"fpl": 3.4224632685290155, "lider": 6.579778475534839, "mdq": 14.025287147293447}, "ppto": {"fpl": 4.2298547191869185, "lider": 5.332677467772755, "mdq": 9.384436100647306}}, "np": {"act": {"fpl": 725.636905720229, "lider": 552.6123521547233, "mdq": 713.5949665613691}, "ppto": {"fpl": 1108.9177362089515, "lider": 458.54118195111346, "mdq": 422.17189580043504}}, "npp": {"act": {"fpl": 1.8794891188486686, "lider": 5.548052046336719, "mdq": 13.231361767322541}, "ppto": {"fpl": 2.9897777740613853, "lider": 4.780729537340193, "mdq": 8.651685393258415}}}, "ytd": {"venta": {"act": {"fpl": 144717.92418537574, "lider": 37832.632896439995, "mdq": 23590.99734339496}, "ppto": {"fpl": 136507.55801663836, "lider": 35930.78823030311, "mdq": 21748.11487141872}}, "costo": {"act": {"fpl": -95523.06496097911, "lider": -24287.925194871215, "mdq": -14973.873900309998}, "ppto": {"fpl": -88251.61766740523, "lider": -23067.56604385459, "mdq": -13483.831220279606}}, "costop": {"act": {"fpl": -66.00638137859087, "lider": -64.19834765757653, "mdq": -63.47283110733935}, "ppto": {"fpl": -64.64962010136361, "lider": -64.19999999999997, "mdq": -62.0}}, "comis": {"act": {"fpl": -15542.585405479998, "lider": -2842.09876999, "mdq": -1547.1776350382179}, "ppto": {"fpl": -14560.791898662224, "lider": -2763.293599660611, "mdq": -1739.8491897134973}}, "mbf": {"act": {"fpl": 33652.27381891661, "lider": 10702.608931578778, "mdq": 7069.945808046743}, "ppto": {"fpl": 33695.1484505709, "lider": 10099.9285867879, "mdq": 6524.434461425615}}, "mbfp": {"act": {"fpl": 23.253701300890615, "lider": 28.289357922498386, "mdq": 29.968829656225605}, "ppto": {"fpl": 24.68372370009281, "lider": 28.109398886690386, "mdq": 30.0}}, "iibb": {"act": {"fpl": -2256.72724638194, "lider": -937.0756267300001, "mdq": -664.37421420075}, "ppto": {"fpl": -2335.06873477398, "lider": -934.2004939878808, "mdq": -674.1915610139803}}, "gvar": {"act": {"fpl": -3006.28142654, "lider": -805.5603281799999, "mdq": -427.132383877796}, "ppto": {"fpl": -2902.356988893724, "lider": -682.684976375759, "mdq": -474.72612833884716}}, "cmarg": {"act": {"fpl": 28389.26514599468, "lider": 8959.972976668778, "mdq": 5978.439209968197}, "ppto": {"fpl": 28457.7227269032, "lider": 8483.04311642426, "mdq": 5375.516772072788}}, "gfij": {"act": {"fpl": -23802.197245097253, "lider": -6601.117784440001, "mdq": -2424.3058212351866}, "ppto": {"fpl": -23721.169455410523, "lider": -6799.890083942116, "mdq": -3481.3249411515458}}, "gtos": {"act": {"fpl": -26808.478671637255, "lider": -7406.67811262, "mdq": -2851.4382051129824}, "ppto": {"fpl": -26623.526444304243, "lider": -7482.575060317875, "mdq": -3956.0510694903933}}, "gtosp": {"act": {"fpl": -18.52464290276653, "lider": -19.577485217310794, "mdq": -12.086976076538502}, "ppto": {"fpl": -19.50333507618619, "lider": -20.824967747318336, "mdq": -18.19031715107142}}, "ebitda": {"act": {"fpl": 4587.067900897424, "lider": 2358.8551922287784, "mdq": 3554.1333887330106}, "ppto": {"fpl": 4736.553271492678, "lider": 1683.153032482145, "mdq": 1894.191830921242}}, "ebitdap": {"act": {"fpl": 3.1696612059067686, "lider": 6.234974971701597, "mdq": 15.065634305317326}, "ppto": {"fpl": 3.4698102730072704, "lider": 4.6844311393720455, "mdq": 8.70968284892858}}, "np": {"act": {"fpl": 2196.6694982631466, "lider": 1963.491162557671, "mdq": 3419.5873377530106}, "ppto": {"fpl": 2598.844817253741, "lider": 1482.802292249152, "mdq": 1750.6157160251544}}, "npp": {"act": {"fpl": 1.5178973237961408, "lider": 5.1899405677959916, "mdq": 14.495306357662033}, "ppto": {"fpl": 1.9038102029024488, "lider": 4.12682928842233, "mdq": 8.049505561173056}}}};
+  ULTIMO_REAL=4;
+}
+</script>
+</body></html>
